@@ -1,0 +1,527 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Refleksi LENTERA 1888 | SMP Negeri 5 Cilegon</title>
+<style>
+:root{--navy:#102b50;--blue:#1768ac;--gold:#f4b942;--cream:#fff8e9;--ink:#203047;--muted:#65748b;--line:#dce4ee;--green:#16845b}
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,Helvetica,sans-serif;background:linear-gradient(135deg,#edf4fb,#fff8e9);color:var(--ink);min-height:100vh}
+header{background:var(--navy);color:white;padding:22px 16px;text-align:center;border-bottom:5px solid var(--gold)}
+header .eyebrow{font-size:12px;letter-spacing:2px;color:#f8d98c;font-weight:bold}
+header h1{margin:8px 0 4px;font-size:clamp(25px,5vw,38px);letter-spacing:1px}
+header p{margin:5px auto 0;max-width:720px;color:#e4edf8;line-height:1.5}
+.wrap{max-width:900px;margin:26px auto;padding:0 15px 45px}
+.panel{background:white;border:1px solid var(--line);border-radius:18px;padding:24px;box-shadow:0 10px 30px #102b5010;margin-bottom:18px}
+h2{color:var(--navy);margin:0 0 8px}
+h3{color:var(--navy);margin:22px 0 10px}
+.sub{color:var(--muted);line-height:1.5;margin-top:0}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:22px}
+.role{border:2px solid var(--line);border-radius:16px;padding:22px;text-align:left;background:#fff;cursor:pointer;transition:.2s}
+.role:hover{border-color:var(--blue);transform:translateY(-2px);box-shadow:0 8px 20px #1768ac18}
+.role .emoji{font-size:34px}
+.role strong{display:block;color:var(--navy);font-size:20px;margin:10px 0 5px}
+.role span{color:var(--muted);font-size:14px;line-height:1.45}
+label{display:block;font-weight:700;font-size:14px;margin:14px 0 7px}
+input,select,textarea{width:100%;padding:12px 13px;border:1px solid #cbd6e2;border-radius:10px;font:inherit;background:#fff;color:var(--ink)}
+textarea{min-height:90px;resize:vertical}
+button{border:0;border-radius:10px;padding:12px 18px;font-weight:700;font-size:15px;cursor:pointer}
+button:disabled{opacity:.6;cursor:wait}
+.primary{background:var(--blue);color:white}
+.secondary{background:#eaf1f8;color:var(--navy)}
+.gold{background:var(--gold);color:#382700}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}
+.question{padding:15px 0;border-bottom:1px solid var(--line)}
+.question:last-child{border:0}
+.question p{font-weight:700;margin:0 0 12px;line-height:1.45}
+.scale{display:flex;gap:8px;flex-wrap:wrap}
+.scale label{margin:0;font-weight:400}
+.scale input{width:auto;margin-right:5px}
+.scale span{display:inline-block;border:1px solid var(--line);padding:9px 11px;border-radius:9px;background:#f8fafc}
+.notice{background:#fff6df;border-left:4px solid var(--gold);padding:12px 14px;border-radius:8px;color:#624b19;font-size:13px;line-height:1.5}
+.hidden{display:none!important}
+.stat{background:#f3f7fb;border-radius:12px;padding:15px}
+.stat b{font-size:26px;color:var(--navy);display:block}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th,td{border-bottom:1px solid var(--line);padding:10px;text-align:left;vertical-align:top}
+th{background:#f1f5f9;color:var(--navy)}
+.small{font-size:12px;color:var(--muted)}
+.tag{display:inline-block;background:#e9f3ff;color:#15548b;padding:5px 9px;border-radius:20px;font-size:12px;font-weight:bold}
+footer{text-align:center;color:var(--muted);font-size:12px;padding:10px}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="eyebrow">SMP NEGERI 5 CILEGON • KELAS VIII</div>
+  <h1>LENTERA 1888</h1>
+  <p>Refleksi Akhir Program Kokurikuler<br>
+  <b>Menolak Lupa Geger Cilegon dalam Bingkai Teknologi Digital</b></p>
+</header>
+
+<main class="wrap">
+
+<section id="home" class="panel">
+  <h2>Selamat Datang</h2>
+  <p class="sub">Silakan pilih akses sesuai peran Anda.</p>
+  <div class="grid">
+    <button class="role" onclick="showLogin('siswa')">
+      <div class="emoji">🎓</div>
+      <strong>Login Siswa</strong>
+      <span>Mengisi refleksi pengalaman belajar LENTERA 1888.</span>
+    </button>
+    <button class="role" onclick="showLogin('guru')">
+      <div class="emoji">👩‍🏫</div>
+      <strong>Login Guru</strong>
+      <span>Mengisi refleksi pelaksanaan program.</span>
+    </button>
+  </div>
+</section>
+
+<section id="login" class="panel hidden">
+  <span class="tag" id="roleTag">LOGIN</span>
+  <h2 id="loginTitle">Masuk</h2>
+  <p class="sub" id="loginDesc"></p>
+
+  <form id="loginForm">
+    <label for="loginName">Nama lengkap</label>
+    <input id="loginName" required placeholder="Tuliskan nama lengkap"
+      style="text-transform:uppercase"
+      oninput="this.value=this.value.toLocaleUpperCase('id-ID')">
+
+    <div id="studentFields">
+      <label for="studentClass">Kelas</label>
+      <select id="studentClass">
+        <option value="">Pilih kelas</option>
+        <option>VIII A</option><option>VIII B</option>
+        <option>VIII C</option><option>VIII D</option>
+        <option>VIII E</option><option>VIII F</option>
+        <option>VIII G</option><option>VIII H</option>
+        <option>VIII I</option><option>VIII J</option>
+        <option>VIII K</option>
+      </select>
+      <label for="studentGroup">Kelompok</label>
+      <input id="studentGroup" placeholder="Nama atau nomor kelompok">
+    </div>
+
+    <div id="teacherFields" class="hidden">
+      <label for="teacherSubject">Mata pelajaran / tugas</label>
+      <input id="teacherSubject" placeholder="Contoh: IPS / Fasilitator">
+      <label for="teacherPin">PIN Guru</label>
+      <input id="teacherPin" type="password" placeholder="Masukkan PIN guru">
+      <p class="small">PIN akses guru: 123456</p>
+    </div>
+
+    <div class="actions">
+      <button class="primary" type="submit">Lanjutkan</button>
+      <button class="secondary" type="button" onclick="goHome()">Kembali</button>
+    </div>
+  </form>
+</section>
+
+<section id="studentForm" class="panel hidden">
+  <span class="tag">REFLEKSI SISWA</span>
+  <h2>Refleksi Pengalaman Belajar</h2>
+  <p class="sub">Jawablah dengan jujur sesuai pengalamanmu. Tidak ada jawaban benar atau salah.</p>
+
+  <form id="studentReflection">
+    <div class="question"><p>1. Saya mendapatkan pengetahuan baru tentang Peristiwa Geger Cilegon Tahun 1888.</p><div class="scale" data-name="s1"></div></div>
+    <div class="question"><p>2. Saya semakin bangga dan peduli terhadap sejarah lokal Kota Cilegon.</p><div class="scale" data-name="s2"></div></div>
+    <div class="question"><p>3. Saya mendapatkan pengalaman baru dalam membuat karya digital dengan memanfaatkan teknologi dan AI.</p><div class="scale" data-name="s3"></div></div>
+    <div class="question"><p>4. Saya mampu bekerja sama, berbagi tugas, dan bertanggung jawab dalam kelompok.</p><div class="scale" data-name="s4"></div></div>
+    <div class="question"><p>5. Kegiatan kokurikuler LENTERA 1888 memberikan pengalaman belajar yang menarik dan bermakna.</p><div class="scale" data-name="s5"></div></div>
+
+    <label for="s6">6. Apa pengalaman paling berkesan selama mengikuti kegiatan LENTERA 1888?</label>
+    <textarea id="s6" required></textarea>
+    <label for="s7">7. Apa nilai perjuangan Geger Cilegon 1888 yang akan kamu terapkan dalam kehidupan sehari-hari?</label>
+    <textarea id="s7" required></textarea>
+    <label for="s8">8. Apa saranmu agar kegiatan kokurikuler berikutnya menjadi lebih baik?</label>
+    <textarea id="s8" required></textarea>
+
+    <div class="actions">
+      <button class="primary" id="studentSubmit" type="submit">Kirim Refleksi</button>
+      <button class="secondary" type="button" onclick="goHome()">Batal</button>
+    </div>
+  </form>
+</section>
+
+<section id="teacherForm" class="panel hidden">
+  <span class="tag">REFLEKSI GURU</span>
+  <h2>Evaluasi Pelaksanaan Program</h2>
+  <p class="sub">Berikan penilaian berdasarkan pengalaman Bapak/Ibu selama mendampingi program.</p>
+
+  <form id="teacherReflection">
+    <div class="question"><p>1. Modul kokurikuler membantu saya melaksanakan kegiatan secara terarah.</p><div class="scale" data-name="t1"></div></div>
+    <div class="question"><p>2. Tujuan program tercapai sesuai perencanaan.</p><div class="scale" data-name="t2"></div></div>
+    <div class="question"><p>3. Materi sejarah Geger Cilegon 1888 relevan dengan kebutuhan siswa.</p><div class="scale" data-name="t3"></div></div>
+    <div class="question"><p>4. Kolaborasi antarguru berjalan efektif.</p><div class="scale" data-name="t4"></div></div>
+    <div class="question"><p>5. Pemanfaatan teknologi digital dan AI mendukung proses pembelajaran.</p><div class="scale" data-name="t5"></div></div>
+    <div class="question"><p>6. Siswa menunjukkan perkembangan kreativitas, berpikir kritis, dan tanggung jawab.</p><div class="scale" data-name="t6"></div></div>
+
+    <label for="t7">7. Apa keberhasilan atau pengalaman paling berkesan selama program?</label>
+    <textarea id="t7" required></textarea>
+    <label for="t8">8. Apa kendala utama dan rekomendasi perbaikan untuk program berikutnya?</label>
+    <textarea id="t8" required></textarea>
+
+    <div class="actions">
+      <button class="primary" id="teacherSubmit" type="submit">Kirim Refleksi Guru</button>
+      <button class="secondary" type="button" onclick="goHome()">Batal</button>
+    </div>
+  </form>
+</section>
+
+<section id="success" class="panel hidden">
+  <h2>Terima kasih! 🎉</h2>
+  <p class="sub" id="successMessage">Refleksi telah dikirim.</p>
+  <button class="primary" onclick="goHome()">Kembali ke Beranda</button>
+</section>
+
+<section id="dashboard" class="panel hidden">
+  <span class="tag">DASHBOARD GURU</span>
+  <h2>Rekap Refleksi Lokal</h2>
+  <p class="sub">Dashboard ini menampilkan data yang tersimpan pada browser/perangkat ini. Untuk rekap seluruh perangkat, buka Google Sheets.</p>
+  <div class="grid">
+    <div class="stat"><b id="studentCount">0</b><span>Refleksi siswa</span></div>
+    <div class="stat"><b id="teacherCount">0</b><span>Refleksi guru</span></div>
+  </div>
+  <div class="actions">
+    <button class="primary" onclick="exportCSV()">Unduh Rekap CSV</button>
+    <button class="secondary" onclick="goHome()">Keluar</button>
+  </div>
+  <h3>Data masuk di perangkat ini</h3>
+  <div style="overflow-x:auto">
+    <table>
+      <thead><tr><th>Waktu</th><th>Jenis</th><th>Nama</th><th>Kelas / Peran</th><th>Jawaban</th></tr></thead>
+      <tbody id="dataRows"></tbody>
+    </table>
+  </div>
+</section>
+
+<footer>© 2026 SMP Negeri 5 Cilegon • LENTERA 1888</footer>
+</main>
+
+<script>
+// URL Google Apps Script Web App Brother
+const SHEETS_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbz-rOqior6h_TV4vxjJpjjsCF3O8YSZ193kzl9fhvLeXCVwNWe2k-TATB_So8lPftU/exec';
+
+const STORE = 'lentera1888_reflections_v1';
+let currentRole = '';
+
+const labels = [
+  '1 - Sangat Tidak Setuju',
+  '2 - Tidak Setuju',
+  '3 - Setuju',
+  '4 - Sangat Setuju'
+];
+
+// Membuat pilihan skala penilaian
+document.querySelectorAll('.scale').forEach(box => {
+  const name = box.dataset.name;
+  labels.forEach((txt, i) => {
+    const lab = document.createElement('label');
+    lab.innerHTML =
+      '<span><input type="radio" name="' + name +
+      '" value="' + (i + 1) + '" required>' + txt + '</span>';
+    box.appendChild(lab);
+  });
+});
+
+function getData() {
+  try {
+    return JSON.parse(localStorage.getItem(STORE) || '[]');
+  } catch (e) {
+    return [];
+  }
+}
+
+function saveData(data) {
+  localStorage.setItem(STORE, JSON.stringify(data));
+}
+
+function hideAll() {
+  ['home','login','studentForm','teacherForm','success','dashboard']
+    .forEach(id => document.getElementById(id).classList.add('hidden'));
+}
+
+function goHome() {
+  hideAll();
+  document.getElementById('home').classList.remove('hidden');
+}
+
+function showLogin(role) {
+  currentRole = role;
+  hideAll();
+  document.getElementById('login').classList.remove('hidden');
+
+  document.getElementById('roleTag').textContent =
+    role === 'siswa' ? 'LOGIN SISWA' : 'LOGIN GURU';
+
+  document.getElementById('loginTitle').textContent =
+    role === 'siswa' ? 'Masuk sebagai Siswa' : 'Masuk sebagai Guru';
+
+  document.getElementById('loginDesc').textContent =
+    role === 'siswa'
+    ? 'Isi identitas untuk melanjutkan ke refleksi siswa.'
+    : 'Isi identitas untuk melanjutkan ke refleksi guru.';
+
+  document.getElementById('studentFields').classList.toggle('hidden', role !== 'siswa');
+  document.getElementById('teacherFields').classList.toggle('hidden', role !== 'guru');
+}
+
+// Proses login
+document.getElementById('loginForm').addEventListener('submit', e => {
+  e.preventDefault();
+
+  const name = document.getElementById('loginName').value.trim();
+  if (!name) return;
+
+  let kelas = '';
+  let group = '';
+  let subject = '';
+
+  if (currentRole === 'siswa') {
+    kelas = document.getElementById('studentClass').value;
+    group = document.getElementById('studentGroup').value;
+
+    if (!kelas) {
+      alert('Pilih kelas terlebih dahulu.');
+      return;
+    }
+
+    hideAll();
+    document.getElementById('studentForm').classList.remove('hidden');
+
+  } else {
+    const pin = document.getElementById('teacherPin').value;
+
+    if (pin !== '123456') {
+      alert('PIN guru salah. Silakan periksa kembali.');
+      return;
+    }
+
+    subject = document.getElementById('teacherSubject').value;
+
+    hideAll();
+    document.getElementById('teacherForm').classList.remove('hidden');
+  }
+
+  sessionStorage.setItem('lentera_current', JSON.stringify({
+    role: currentRole,
+    name: name,
+    kelas: kelas,
+    group: group,
+    subject: subject
+  }));
+});
+
+// Mengambil nilai skala
+function collectScale(prefix, total) {
+  const result = [];
+
+  for (let i = 1; i <= total; i++) {
+    const selected = document.querySelector(
+      'input[name="' + prefix + i + '"]:checked'
+    );
+
+    if (!selected) return null;
+    result.push(selected.value);
+  }
+
+  return result;
+}
+
+// Mengirim data ke Google Sheets
+async function submitRecord(role, answers, buttonId) {
+  const button = document.getElementById(buttonId);
+  const originalText = button.textContent;
+  button.disabled = true;
+  button.textContent = 'Mengirim...';
+
+  try {
+    const who = JSON.parse(
+      sessionStorage.getItem('lentera_current') || '{}'
+    );
+
+    const record = {
+      time: new Date().toISOString(),
+      role: role,
+      name: who.name || '',
+      kelas: who.kelas || '',
+      group: who.group || '',
+      subject: who.subject || '',
+      answers: answers
+    };
+
+    // Simpan salinan lokal
+    const localData = getData();
+    localData.push(record);
+    saveData(localData);
+
+    // Kirim ke Google Apps Script
+    if (!SHEETS_WEB_APP_URL.startsWith('https://script.google.com/')) {
+      throw new Error('URL Google Apps Script belum dipasang.');
+    }
+
+    await fetch(SHEETS_WEB_APP_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: {
+        'Content-Type': 'text/plain;charset=utf-8'
+      },
+      body: JSON.stringify(record)
+    });
+
+    document.getElementById('successMessage').textContent =
+      'Permintaan pengiriman telah dilakukan. Terima kasih sudah mengisi refleksi!';
+
+    hideAll();
+    document.getElementById('success').classList.remove('hidden');
+
+  } catch (error) {
+    console.error('Kesalahan pengiriman:', error);
+
+    alert(
+      'Terjadi kesalahan saat mengirim refleksi. ' +
+      'Periksa koneksi internet dan URL Google Apps Script.'
+    );
+
+  } finally {
+    button.disabled = false;
+    button.textContent = originalText;
+  }
+}
+
+// Submit refleksi siswa
+document.getElementById('studentReflection').addEventListener('submit', async e => {
+  e.preventDefault();
+
+  const ratings = collectScale('s', 5);
+
+  if (!ratings) {
+    alert('Lengkapi penilaian nomor 1–5.');
+    return;
+  }
+
+  const answers = {
+    ratings: ratings,
+    kesan: document.getElementById('s6').value.trim(),
+    nilai: document.getElementById('s7').value.trim(),
+    saran: document.getElementById('s8').value.trim()
+  };
+
+  await submitRecord('Siswa', answers, 'studentSubmit');
+});
+
+// Submit refleksi guru - sudah diperbaiki
+document.getElementById('teacherReflection').addEventListener('submit', async e => {
+  e.preventDefault();
+
+  const ratings = collectScale('t', 6);
+
+  if (!ratings) {
+    alert('Lengkapi penilaian nomor 1–6.');
+    return;
+  }
+
+  const answers = {
+    ratings: ratings,
+    keberhasilan: document.getElementById('t7').value.trim(),
+    kendala: document.getElementById('t8').value.trim()
+  };
+
+  await submitRecord('Guru', answers, 'teacherSubmit');
+});
+
+// Dashboard data lokal
+function openDashboard() {
+  const data = getData();
+
+  document.getElementById('studentCount').textContent =
+    data.filter(x => x.role === 'Siswa').length;
+
+  document.getElementById('teacherCount').textContent =
+    data.filter(x => x.role === 'Guru').length;
+
+  const body = document.getElementById('dataRows');
+  body.innerHTML = '';
+
+  data.slice().reverse().forEach(record => {
+    const tr = document.createElement('tr');
+    const brief = Object.values(record.answers).flat().join(' • ');
+
+    [
+      record.time,
+      record.role,
+      record.name,
+      (record.kelas || record.subject || '') +
+        (record.group ? ' / ' + record.group : ''),
+      brief
+    ].forEach(value => {
+      const td = document.createElement('td');
+      td.textContent = String(value);
+      tr.appendChild(td);
+    });
+
+    body.appendChild(tr);
+  });
+
+  hideAll();
+  document.getElementById('dashboard').classList.remove('hidden');
+}
+
+// Export data lokal
+function exportCSV() {
+  const data = getData();
+
+  if (!data.length) {
+    alert('Belum ada data.');
+    return;
+  }
+
+  const rows = [
+    ['Waktu','Jenis','Nama','Kelas','Kelompok/Peran','Jawaban'],
+    ...data.map(r => [
+      r.time,
+      r.role,
+      r.name,
+      r.kelas,
+      r.group || r.subject,
+      JSON.stringify(r.answers)
+    ])
+  ];
+
+  const csv = rows.map(row =>
+    row.map(value =>
+      '"' + String(value ?? '').replace(/"/g, '""') + '"'
+    ).join(',')
+  ).join('\n');
+
+  const blob = new Blob(['\ufeff' + csv], {
+    type: 'text/csv;charset=utf-8;'
+  });
+
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'Rekap_Refleksi_LENTERA_1888.csv';
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+// Akses dashboard melalui klik dua kali judul login saat mode guru
+document.getElementById('loginTitle').addEventListener('dblclick', () => {
+  if (currentRole === 'guru') {
+    const pin = prompt('Masukkan PIN guru untuk membuka dashboard:');
+    if (pin === '123456') {
+      openDashboard();
+    } else {
+      alert('PIN salah.');
+    }
+  }
+});
+</script>
+
+</body>
+</html>
